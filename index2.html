@@ -1,84 +1,104 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Quote Generator by Jonathan Caldwell</title>
-    <link rel="stylesheet" href="style.css">
-</head>
-<body>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
     <script src="https://cdn.freecodecamp.org/testable-projects-fcc/v1/bundle.js"></script>
-    <div id ="quote-box">
-        <div id="title">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css"  />
+
+    <div id="quote-box">
+      <div id="title">
         <b>Random Psalm:</b>
-        <hr>
-        </div>
-        <div id="text">Random quote</div>
-        <div id="author">Author</div>
-        <a href="https://twitter.com/intent/tweet" id="tweet-quote">Twit</a>
-        <button id="new-quote">New Quote</button>
+        <hr />
+      </div>
+      <div id="text">Random quote</div>
+      <div id="author">Author</div>
+      <a href="https://twitter.com/intent/tweet" id="tweet-quote"><i class="fa fa-twitter"></i></a>
+      <button id="new-quote">New Quote</button>
     </div>
-</body>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.0/jquery-ui.min.js"></script>
-<!-- <script src="script2.js"></script> -->
+  </body>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.0/jquery-ui.min.js"></script>
+  <!-- <script src="script2.js"></script> -->
 
-<script>
-    let getVerse = () => {
-          // console.log('$(this).text()')
-          let chapter = Math.floor(Math.random() * 150)
-            console.log(chapter)
-            fetch("https://bible-api.com/psalms%20" + chapter)
-            .then(res => res.json())
-            .then(data => data)
-            .then(data => {
-                // console.log(data.verses)
-                // console.log(data.verses.length)
-                // console.log(Math.random())
-                // console.log(Math.random() * data.verses.length)
-                let verse = Math.floor(Math.random() * data.verses.length)
-                let verseText = data.verses[verse].text
-                // let verseText = data.verses[0].text
-                console.log(verseText)
-                let citation = 'Psalms ' + chapter +':'+ (verse+1)
-                console.log(citation)
-                $("#text").text(verseText)
-                $("#author").text(citation)
-            }
-            )
-    }
+  <script>
+    let getShowVerse = () => {
+      // console.log('$(this).text()')
+      let chapter = Math.floor(Math.random() * 150);
+      console.log(chapter);
+      fetch("https://bible-api.com/psalms%20" + chapter)
+        .then((res) => res.json())
+        .then((data) => data)
+        .then((data) => {
+          // console.log(data.verses)
+          // console.log(data.verses.length)
+          // console.log(Math.random())
+          // console.log(Math.random() * data.verses.length)
+          let verse = Math.floor(Math.random() * data.verses.length);
+          let verseText = data.verses[verse].text;
+          // let verseText = data.verses[0].text
+          console.log(verseText);
+          let citation = "Psalms " + chapter + ":" + (verse + 1);
+          console.log(citation);
+          $("#text").text(verseText);
+          $("#author").text(citation);
+        })
+        .then(() => {
+            setTweetURL();
+        });
+    };
 
-    $(document).ready(function() {
-        getVerse()
-        $('#new-quote').on('click', function ()  {
-            console.log('$(this).text()')
-        })
-        $('#new-quote').click(function ()  {
-            // console.log('$(this).text()')
-            // let chapter = Math.floor(Math.random() * 150)
-            // console.log(chapter)
-            // fetch("https://bible-api.com/psalms%20" + chapter)
-            // .then(res => res.json())
-            // .then(data => data)
-            // .then(data => {
-            //     // console.log(data.verses)
-            //     // console.log(data.verses.length)
-            //     // console.log(Math.random())
-            //     // console.log(Math.random() * data.verses.length)
-            //     let verse = Math.floor(Math.random() * data.verses.length)
-            //     let verseText = data.verses[verse].text
-            //     // let verseText = data.verses[0].text
-            //     console.log(verseText)
-            //     let citation = 'Psalms ' + chapter +':'+ (verse+1)
-            //     console.log(citation)
-            //     $("#text").text(verseText)
-            //     $("#author").text(citation)
-            // }
-            // )
-            getVerse()
-        })
+    let copyVerseText = () => {
+      return $("#text")[0].innerText;
+    };
+
+    let copyVerseCitation = () => {
+      return $("#author")[0].innerText;
+    };
+
+    let setTweetURL = () => {
+      $("#tweet-quote").attr(
+        "href",
+        "https://twitter.com/intent/tweet?hashtags=BibleQuotes&related=freecodecamp&text=" +
+          encodeURIComponent('"' + copyVerseText() + '" ' + copyVerseCitation())
+      );
+    };
+
+    $(document).ready(function () {
+      getShowVerse();
+      $("#new-quote").on("click", function () {
+        console.log("$(this).text()");
+      });
+      $("#new-quote").click(function () {
+        // console.log('$(this).text()')
+        // let chapter = Math.floor(Math.random() * 150)
+        // console.log(chapter)
+        // fetch("https://bible-api.com/psalms%20" + chapter)
+        // .then(res => res.json())
+        // .then(data => data)
+        // .then(data => {
+        //     // console.log(data.verses)
+        //     // console.log(data.verses.length)
+        //     // console.log(Math.random())
+        //     // console.log(Math.random() * data.verses.length)
+        //     let verse = Math.floor(Math.random() * data.verses.length)
+        //     let verseText = data.verses[verse].text
+        //     // let verseText = data.verses[0].text
+        //     console.log(verseText)
+        //     let citation = 'Psalms ' + chapter +':'+ (verse+1)
+        //     console.log(citation)
+        //     $("#text").text(verseText)
+        //     $("#author").text(citation)
+        // }
+        // )
+        getShowVerse();
+      });
     });
     // https://bible-api.com/psalms%20150
-</script>
-    </html>
+  </script>
+</html>
