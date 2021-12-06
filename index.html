@@ -50,6 +50,9 @@
         })
         .then(() => {
             setTweetURL();
+        })
+        .catch(() => {
+          alert("Sorry, the API wasn't accessible. Please try again later.")
         });
     };
 
