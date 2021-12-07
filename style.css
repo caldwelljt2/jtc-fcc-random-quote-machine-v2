@@ -26,6 +26,7 @@ body {
       -ms-flex-align: center;
           align-items: center;
   height: 100vh;
+  flex-direction: column;
 }
 
 .footer {
@@ -112,5 +113,9 @@ body {
 
 #quote-box .buttons .button#new-quote {
   float: right;
+}
+
+#creator {
+  color: white
 }
 /*# sourceMappingURL=style.css.map */
