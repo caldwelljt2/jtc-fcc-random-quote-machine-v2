@@ -82,7 +82,7 @@ body {
   display: block;
 }
 
-#quote-box .buttons .button {
+#quote-box .buttons .button ,#new-quote {
   height: 38px;
   border: none;
   border-radius: 3px;
@@ -115,7 +115,20 @@ body {
   float: right;
 }
 
+#new-quote {
+  float: right;
+}
+
 #creator {
   color: white
 }
+
+#author {
+  align-self: flex-end;
+}
+
+i {
+  font-size: 50px;
+  float: left;
+  }
 /*# sourceMappingURL=style.css.map */
